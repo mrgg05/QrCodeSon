@@ -1,0 +1,147 @@
+﻿
+<head>
+
+    <style>
+
+        html {
+            font-size: 14px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+    <title></title>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.1.220/styles/kendo.common-material.min.css" />
+    <script src="~/Scripts/qrcode.js"></script>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.1.220/styles/kendo.material.min.css" />
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2019.1.220/styles/kendo.material.mobile.min.css" />
+    <script src="https://kendo.cdn.telerik.com/2019.1.220/js/jquery.min.js"></script>
+  
+    <script src="https://kendo.cdn.telerik.com/2019.1.220/js/angular.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2019.1.220/js/kendo.all.min.js"></script>
+
+</head>
+<body>
+    <div id="example" ng-app="KendoDemos">
+        <div ng-controller="MyCtrl" class="demo-section k-content">
+            
+            <div ng-repeat="x in result.data">
+
+                {{x}}
+                <span kendo-qrcode
+                      k-error-correction="'M'"
+                      ng-model="x"
+                      style="height: 250px;"></span>
+            </div>
+        
+
+        </div>
+
+
+        <script>
+
+
+       
+            var app = angular.module("KendoDemos", ["kendo.directives"])
+            app.controller("MyCtrl", function ($scope, $http)  {
+                $http({ method: "GET", url: "/QrProduct/Listele" })
+                    .then(function (result) {
+                      
+                        //$scope.qrcode = new kendo.data.DataSource({
+
+                          
+                        //    data: result.data
+
+                        //});
+
+                        for (var i = 0; i < result.data.length; i++) {
+
+                            $scope.qrcode = result.data[i];
+                            console.log($scope.qrcode);
+                            $scope.qrcode = result.data[i].SKT + ','+result.data[i].ProductID;
+                           
+                        }
+                       
+                       
+
+                        //for (var i = 0; i < $scope.qrcode.length; ++i) {
+                        //    $scope.qrcode[i].ProductID;
+                        //    $scope.qrcode[i].ProductName;
+                        //    $scope.qrcode[i];
+                        //    console.log($scope.qrcode[i]);
+                        //    $scope.qrcode.push = $scope.qrcode[i];
+
+                        //}
+
+                 
+     
+
+
+
+                 
+                    });
+                $scope.customOptions = {
+                    dataTextField: "ProductName",
+                    dataValueField: "ProductID"
+                };
+            });
+
+
+        </script>
+        @*<script>
+          var app= angular.module("KendoDemos", ["kendo.directives"])
+            app.controller("MyCtrl", function ($scope, $http) {
+
+                //$scope.qrcode = "{{skt}}";
+
+                $scope.SktListe = function () {
+                    $http.get("/QrProduct/Listele").then(function (sktt) {
+                        $scope.skt = sktt.data;
+                    });
+                }
+                });
+
+
+
+
+
+
+
+        </script>*@
+    </div>
+
+
+</body>
+
+
+@*<h2>Index</h2>
+
+<body ng-app="myApp" ng-controller="myCtrl">
+
+    <table>
+        <tr>
+            <th>SKT</th>
+        </tr>
+        <tr ng-repeat="x in skt">
+            <td>{{x.SKT}}</td>
+            <td></td>
+        </tr>
+    </table>
+
+
+
+</body>
+
+<script>
+
+    var app = angular.module("myApp", [])
+
+    app.controller("myCtrl", function ($scope, $http) {
+        $http.get("Listele").then(function (response) {
+
+            $scope.skt = response.data;
+        });
+    });
+
+</script>*@
+
+
+
